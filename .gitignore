@@ -1,0 +1,9 @@
+/logs/
+/node_modules/
+/public/css/
+/out
+/tmp
+/build/
+/.gradle/
+
+.DS_Store

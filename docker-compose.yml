@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+  app:
+    restart: always
+    build: .
+    environment:
+      DB_HOST: db
+    depends_on:
+      - db
+  db:
+    restart: always
+    image: postgres:13-alpine
+    volumes:
+      - ./test/db/postgres-init:/docker-entrypoint-initdb.d
+      - data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_MULTIPLE_DATABASES: app_test
+
+volumes:
+  data:

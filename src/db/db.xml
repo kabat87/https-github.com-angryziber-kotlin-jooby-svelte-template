@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd"
+    objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+  <changeSet id="pgsql-uuid-support" author="Codeborne" dbms="PostgreSql">
+    <sql>create extension if not exists "uuid-ossp"</sql>
+  </changeSet>
+
+  <changeSet id="users" author="Codeborne">
+    <createTable tableName="users">
+      <column name="id" type="uuid" defaultValueComputed="uuid_generate_v4()"><constraints primaryKey="true" primaryKeyName="users_pk"/></column>
+      <column name="login" type="varchar(100)"><constraints nullable="false"/></column>
+      <column name="role" type="varchar(32)"><constraints nullable="false"/></column>
+      <column name="lang" type="varchar(2)" defaultValue="en"><constraints nullable="false"/></column>
+      <column name="name" type="varchar(100)"/>
+      <column name="email" type="varchar(50)"><constraints nullable="true"/></column>
+      <column name="passwordHash" type="varchar(100)"/>
+      <column name="createdAt" type="timestamptz" defaultValueComputed="current_timestamp"/>
+    </createTable>
+
+    <createIndex tableName="users" indexName="users_login_idx" unique="true">
+      <column name="login"/>
+    </createIndex>
+  </changeSet>
+
+  <changeSet id="demo admin user" author="Codeborne" context="test-data">
+    <!-- admin/secret -->
+    <sql>insert into users (id, login, name, role, passwordHash) values ('ad781678-3cf0-11ea-b77f-2e728ce88125', 'admin', 'Demo Admin', 'ADMIN', 'EKquZCQo/g1EzlTVOvb6muWybt1uR9LUEBlSdLmMeHt3hIEO1A6XksokwWMRCfKsm1eNznyxGHsUeNhtzrtlUQ==')</sql>
+  </changeSet>
+</databaseChangeLog>
