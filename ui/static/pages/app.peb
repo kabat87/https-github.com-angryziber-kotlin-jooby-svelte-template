@@ -1,0 +1,13 @@
+{% extends "base.peb" %}
+
+{% block head %}
+  <script>
+    window.config = {{configJson | raw}}
+  </script>
+  <script type="module" src="/_dist_/ui/main.js?{{ assetsTime }}"></script>
+{% endblock %}
+
+{%block body %}
+  <div id="app"></div>
+  {% include "footer.peb" %}
+{% endblock %}

@@ -1,0 +1,27 @@
+@import "./_variables";
+@import "./_bootstrap";
+@import "./_components";
+
+html {
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html.loading * {
+  // set by gateway for global loading state
+  cursor: wait !important;
+}
+
+a {
+  // make links without href work
+  cursor: pointer;
+}
+
+.global-warning {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+}
