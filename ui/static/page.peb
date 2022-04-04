@@ -1,0 +1,31 @@
+{% extends "base.peb" %}
+
+{% block body %}
+  <header class="mt-4 container container-wide d-flex justify-content-between">
+
+    <a href="/">
+      <h1>{{title}}</h1>
+    </a>
+
+    <div class="d-flex align-items-center">
+      <a href="/{{lang}}/app/" class="btn btn-secondary">
+        <span>{{login.submit}}</span>
+        {{ icon('log-in', 'ml-2') }}
+      </a>
+
+      <div class="language-selection">
+        <select class="form-select"
+                onchange="location.pathname = location.pathname.replace(/^\/[a-z]{2}\//, '/' + this.value + '/')">
+          {% for l in langs %}
+            <option {%if lang == l %}selected{% endif %} value="{{l}}">{{l.toUpperCase()}}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+    </div>
+  </header>
+
+  {% block content %}{% endblock %}
+
+  {% include 'footer.peb' %}
+{% endblock %}
